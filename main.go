@@ -31,7 +31,7 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
-
+		w.Header().Set("Content-Type", "application/json")
 		_, err = w.Write(info)
 		if err != nil {
 			log.Println(err)
