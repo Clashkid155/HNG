@@ -13,7 +13,14 @@ const (
 )
 
 func main() {
-	h1 := func(w http.ResponseWriter, req *http.Request) {
+
+	http.HandleFunc("/api", introApi())
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func introApi() func(w http.ResponseWriter, req *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
 		currentTime := time.Now()
 		utcFormat := currentTime.UTC().Format("2006-01-02T15:04:05Z")
 
@@ -37,10 +44,6 @@ func main() {
 			log.Println(err)
 		}
 	}
-
-	http.HandleFunc("/api", h1)
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 type ReturnInfo struct {
